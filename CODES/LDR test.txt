@@ -1,0 +1,14 @@
+const byte ldrPin = A4;
+
+void setup()   /**************************** SETUP: RUNS ONCE *******************/
+{
+  pinMode(ldrPin, INPUT);
+
+  Serial.begin(9600);
+
+}//--(end setup )---
+
+void loop()   /******************** LOOP: RUNS CONSTANTLY *******************/
+{
+  Serial.println(analogRead(ldrPin));
+}

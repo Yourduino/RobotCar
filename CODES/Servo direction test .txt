@@ -1,0 +1,16 @@
+void setup()   /**************************** SETUP: RUNS ONCE *******************/
+{
+
+  pinMode(servoPin, OUTPUT);
+
+
+
+  servo.attach(servoPin);
+  servo.write(95); //default central position
+
+  Serial.begin(9600);
+
+}//--(end setup )---
+
+void loop()   /******************** LOOP: RUNS CONSTANTLY *******************/
+{
