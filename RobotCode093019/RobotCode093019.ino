@@ -8,7 +8,7 @@
   - V1.05 30 September 2019: fixes by Kufy.. And fixed float assigment NULL.
   tion, added servo for ultrasonic, added lightFollower() function, added  edge detection
    Questions: kuffykeys@gmail.com , terry@yourduino.com
-   PINS USED: 0,1,2,3,4,5,6,7,8,9,10,12,13,A0,A1,A2,A3,A4 remainder---->11,A5 for the 2 other photo sensors.... 
+   PINS USED: 0,1,2,3,4,5,6,7,8,9,10,12,13,A0,A1,A2,A3,A4 remainder---->11,A5 for the 2 other photo sensors....
    Not enough pins on UNO. That means we have to use just 1 photo sensor in front
 
 
@@ -40,6 +40,11 @@ const byte leftLine = A1;   // PhotoSensors in Line Follower
 const byte  middleLine = A2;
 const byte rightLine = A3;
 const byte ldrPin = A4;
+
+/*--------------------(flags for different motor speeds)---------------*/
+bool slowSpeed = false, mediumSpeed = false, fastSpeed = false;
+byte motorSpeed_front = 0;
+byte motorSpeed_back = 0;
 
 
 
@@ -226,6 +231,18 @@ void loop()   /******************** LOOP: RUNS CONSTANTLY *******************/
         lightMode = false;
         break;
 
+      case 'X':
+        slowSpeed = true, mediumSpeed = false, fastSpeed = false;
+        break;
+
+      case 'Y':
+        slowSpeed = false, mediumSpeed = true, fastSpeed = false;
+        break;
+
+      case 'Z':
+        slowSpeed = false, mediumSpeed = false, fastSpeed = true;
+        break;
+
       default:
         StopMode = true;
         frontMode = false;
@@ -278,6 +295,21 @@ void loop()   /******************** LOOP: RUNS CONSTANTLY *******************/
     detectLight();
   }
 
+  if (slowSpeed){
+    motorSpeed_front = 150;
+    motorSpeed_back = 110;
+  }
+
+  if (mediumSpeed){
+    motorSpeed_front = 75;
+    motorSpeed_back = 185;
+  }
+
+  if (fastSpeed){
+    motorSpeed_front = 0;
+    motorSpeed_back = 255;
+  }
+
 }//--(end main loop )---
 
 
@@ -285,27 +317,18 @@ void loop()   /******************** LOOP: RUNS CONSTANTLY *******************/
 /*-----( Declare User-written Functions )-----*/
 void front()
 {
-
-  //  if (digitalRead(middleLine) == HIGH)
-  //  {
-  //    back();
-  //  }
-
-  //  if (digitalRead(middleLine) == LOW)
-  //  {
   digitalWrite(MA_dir, HIGH);
   digitalWrite(MB_dir, HIGH);
-  analogWrite(MA_spd, 0);
-  analogWrite(MB_spd, 0);
-  //  }
+  analogWrite(MA_spd, motorSpeed_front);
+  analogWrite(MB_spd, motorSpeed_front);
 }
 
 void back()
 {
   digitalWrite(MA_dir, LOW);
   digitalWrite(MB_dir, LOW);
-  analogWrite(MA_spd, 255);
-  analogWrite(MB_spd, 255);
+  analogWrite(MA_spd, motorSpeed_back);
+  analogWrite(MB_spd, motorSpeed_back);
 }
 
 void Stop()
@@ -320,16 +343,16 @@ void left()
 {
   digitalWrite(MA_dir, LOW);
   digitalWrite(MB_dir, HIGH);
-  analogWrite(MA_spd, 20);  //*** TK ***
-  analogWrite(MB_spd, 20);  //*** TK ***
+  analogWrite(MA_spd, motorSpeed_back);  //*** TK ***
+  analogWrite(MB_spd, motorSpeed_front);  //*** TK ***
 }
 
 void right()
 {
   digitalWrite(MA_dir, HIGH);
   digitalWrite(MB_dir, LOW);
-  analogWrite(MA_spd, 20);  //*** TK ***
-  analogWrite(MB_spd, 20);  //*** TK ***
+  analogWrite(MA_spd, motorSpeed_front);  //*** TK ***
+  analogWrite(MB_spd, motorSpeed_back);  //*** TK ***
 }
 
 void trackLine()
