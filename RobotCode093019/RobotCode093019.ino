@@ -43,8 +43,8 @@ const byte ldrPin = A4;
 
 /*--------------------(flags for different motor speeds)---------------*/
 bool slowSpeed = false, mediumSpeed = false, fastSpeed = false;
-byte motorSpeed_front = 0;
-byte motorSpeed_back = 0;
+byte motorSpeed_front = 75;
+byte motorSpeed_back = 185;
 
 
 
@@ -295,17 +295,17 @@ void loop()   /******************** LOOP: RUNS CONSTANTLY *******************/
     detectLight();
   }
 
-  if (slowSpeed){
+  if (slowSpeed) {
     motorSpeed_front = 150;
     motorSpeed_back = 110;
   }
 
-  if (mediumSpeed){
+  if (mediumSpeed) {
     motorSpeed_front = 75;
     motorSpeed_back = 185;
   }
 
-  if (fastSpeed){
+  if (fastSpeed) {
     motorSpeed_front = 0;
     motorSpeed_back = 255;
   }
