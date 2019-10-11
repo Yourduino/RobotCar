@@ -685,19 +685,11 @@ void follower()
 }// END Follower
 
 void countpulse_left() {
-<<<<<<< HEAD
-  counter_right++;
-}
-
-void countpulse_right() {
-  counter_left++;
-=======
   counter_left++;
 }
 
 void countpulse_right() {
   counter_right++;
->>>>>>> added encoder code to the main robot code
 }
 
 //*********( THE END )***********
