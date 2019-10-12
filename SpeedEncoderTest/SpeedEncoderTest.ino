@@ -22,12 +22,6 @@ volatile unsigned int counter_left;
 volatile unsigned int counter_right;
 
 
-<<<<<<< HEAD
-=======
-/*--------------------(flags for different motor speeds)---------------*/
-bool slowSpeed = false, mediumSpeed = false, fastSpeed = false;
-
->>>>>>> 8c27693e2bd108bc5bbce4fac48a75b53dae26b8
 /*------( flags to hold the different robot modes )-----*/
 
 bool manMode = false;
@@ -127,21 +121,6 @@ void loop() {
         lightMode = false;
         break;
 
-<<<<<<< HEAD
-=======
-      case 'X':
-        slowSpeed = true, mediumSpeed = false, fastSpeed = false;
-        break;
-
-      case 'Y':
-        slowSpeed = false, mediumSpeed = true, fastSpeed = false;
-        break;
-
-      case 'Z':
-        slowSpeed = false, mediumSpeed = false, fastSpeed = true;
-        break;
-
->>>>>>> 8c27693e2bd108bc5bbce4fac48a75b53dae26b8
       default:
         StopMode = true;
         frontMode = false;
@@ -156,7 +135,6 @@ void loop() {
   if (manMode)
   {
     if (StopMode) {
-<<<<<<< HEAD
       stopLeftMotor();
       stopRightMotor();
     }
@@ -179,25 +157,6 @@ void loop() {
     if (rightMode) {
       runLeftMotor(DIRECTION_FORWARD, 100);
       runRightMotor(DIRECTION_REVERSE, 100);
-=======
-      Stop();
-    }
-
-    if (frontMode) {
-      front();
-    }
-
-    if (backMode) {
-      back();
-    }
-
-    if (leftMode) {
-      left();
-    }
-
-    if (rightMode) {
-      right();
->>>>>>> 8c27693e2bd108bc5bbce4fac48a75b53dae26b8
     }
   }// END If ManMode
 
