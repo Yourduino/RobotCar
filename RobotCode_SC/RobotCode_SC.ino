@@ -7,7 +7,7 @@
   - V1.02 26 September 2019: Terry rearranged Pin definitions etc..
   - V1.05 30 September 2019: fixes by Kufy.. And fixed float assigment NULL.
   - V1.06 21 October   2019: Kufy added motor speed correction
-  - V1.07 23 October   2019: Kufy added edge detection, changed THRESHOLD_DISTANCE and PAUSE_INTERVAL 
+  - V1.07 23 October   2019: Kufy added edge detection, changed THRESHOLD_DISTANCE and PAUSE_INTERVAL
 
    Questions: kuffykeys@gmail.com , terry@yourduino.com
 
@@ -25,7 +25,7 @@
 #define THRESHOLD_DIST 45
 #define EDGE_DIST 6
 #define BUZZ_INTERVAL 600
-#define LIGHT_THRESHOLD 600
+#define LIGHT_THRESHOLD 800
 #define PAUSE_INTERVAL 600
 
 
@@ -171,7 +171,8 @@ void loop()   /******************** LOOP: RUNS CONSTANTLY *******************/
   //  delay(10);
   //  buzzer();
   //  delay(500);
-  //  Serial.println(detectLight());
+//  int lightIntensity1 = analogRead(ldrPin);
+//  Serial.println(lightIntensity1);
   //  autoDrive();
   //  Serial.println(detectEdge());
   //  Serial.println(obstacle());
@@ -807,30 +808,38 @@ void detectLight()
 
 void follower()
 {
-  dist = obstacle();
+ int distObst = obstacle();
 
-  //come up with a filtering, smoothening algorithm here for ultrasonic
-  estimated_value = simpleKalmanFilter.updateEstimate(dist);
-
-  if (estimated_value < 100 && estimated_value > 30) {
+  if (distObst < 100 && distObst > 30) {
     //This condition is to move forward the robot when the object is in the range of 100 to 30 centimeters.
     front();
+    Serial.println("condition1");
   }
 
-  if (estimated_value < 30 && estimated_value > 20) {
+  if (distObst < 30 && distObst > 20) {
     //This condition is to make the robot stable when the object is in the range of 20 to 30 centimeters.
     Stop();
+    Serial.println("condition2");
   }
 
-  if (estimated_value < 20 && estimated_value > 2) {
+  if (distObst < 20 && distObst > 2) {
     //This condition is to move backward the robot when the object is in the range of 2 to 20 centimeters.
     back();
+    Serial.println("condition3");
   }
 
-  if (estimated_value > 100) {
+  if (distObst > 100) {
     //This condition is to stop the robot when the object is in the out of range i.e greater than 100 centimeters.
     Stop();
+
+    Serial.println("condition4");
   }
+//
+//  else  
+//  {
+//    Stop();
+//    Serial.println("conditionELSE");
+//  }
 }// END Follower
 
 //motor control functions
